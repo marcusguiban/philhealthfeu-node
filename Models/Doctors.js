@@ -15,6 +15,10 @@ const doctorsSchema = new Schema({
         type: String,
         required: true,
     },
+    email: {
+        type: String,
+        required: true,
+    },
     lastname: {
         type: String,
         required: true,
@@ -31,10 +35,7 @@ const doctorsSchema = new Schema({
     type: String,
     },
 
-    email: {
-        type: String,
-        required: true,
-    },
+
     gender: {
         type: String,
         enum: ["Male", "Female", "Other"],

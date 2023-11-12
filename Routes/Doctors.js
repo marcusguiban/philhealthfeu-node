@@ -19,7 +19,7 @@ router.post("/", DoctorMongoDBController.createDoctor);
 //update
 
 
-router.put("/:id",  DoctorMongoDBController.updateDoctor);
+router.put("/",  DoctorMongoDBController.updateDoctor);
 
 // delete
 

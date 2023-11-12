@@ -7,7 +7,7 @@ const getAllDoctors = async (req, res) =>{
         res.json(doctors);
     } catch (error) {
         throw err;
-    }
+    } 
 };
 
 const getDoctors = async (req, res) => {
@@ -43,6 +43,7 @@ const createDoctor = async (req, res) => {
         LicenseNumber, 
         Specialization, 
         Address} = req.body;
+        
 
     try {
 
@@ -78,8 +79,9 @@ const createDoctor = async (req, res) => {
 };
 
 const updateDoctor = async (req, res) => {
-    const { id, UserName, 
+    const {  UserName, 
         email,
+        Password,
         lastname, 
         firstName, 
         middleName, 
@@ -91,39 +93,34 @@ const updateDoctor = async (req, res) => {
         LicenseNumber, 
         Specialization, 
         Address } = req.body;
-
-    try {
-        const updatedDoctor = await Doctors.findOneAndUpdate(
-            { DoctorID: id },
-            {
-                $set: {
-                    UserName,
-                    email,
-                    lastname,
-                    firstName,
-                    middleName,
-                    prefix,
-                    gender,
-                    birthday,
-                    contactNumber,
-                    MaritalStatus,
-                    LicenseNumber,
-                    Specialization,
-                    Address,
-                }
-            },
-            { new: true } // Return the modified document
-        );
-
-        if (updatedDoctor) {
-            res.status(200).json({ msg: "Data updated successfully", updatedDoctor });
-        } else {
-            res.status(404).json({ msg: `Doctor with DoctorID ${id} not found` });
+        let doctorId = req.params.id;
+        try {
+            const doctors = await Doctors.findOne({ DoctorID: doctorId });
+            if (!doctors) {
+                return res.status(404).json({ error: "Doctor not found" });
+            }
+            doctors.UserName = UserName;
+            doctors.email = email;
+            doctors.Password = Password;
+            doctors.lastname = lastname;
+            doctors.firstName = firstName;
+            doctors.firstName = firstName;
+            doctors.middleName = middleName;
+            doctors.prefix = prefix;
+            doctors.gender = gender;
+            doctors.birthday = birthday;
+            doctors.contactNumber = contactNumber;
+            doctors.MaritalStatus = MaritalStatus;
+            doctors.LicenseNumber = LicenseNumber;
+            doctors.Specialization = Specialization;
+            doctors.Address = Address;
+            
+            await doctors.save();
+            res.status(200).json({ msg: "Data updated successfully" });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Internal Server Error" });
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: 'Internal Server Error' });
-    }
 };
 
 
