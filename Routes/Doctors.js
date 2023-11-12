@@ -1,0 +1,28 @@
+const express = require("express");
+const router = express.Router();
+const DoctorMongoDBController = require("../controllers/DoctorsController");
+
+
+
+//get request or read
+
+router.get("/", DoctorMongoDBController.getAllDoctors );
+
+// Get request parametarized
+
+router.get("/:id", DoctorMongoDBController.getDoctors);
+
+// Post Request
+
+router.post("/", DoctorMongoDBController.createDoctor);
+
+//update
+
+
+router.put("/:id",  DoctorMongoDBController.updateDoctor);
+
+// delete
+
+router.delete("/",DoctorMongoDBController.deleteDoctor);
+
+module.exports = router;
