@@ -11,14 +11,14 @@ const getAllDoctors = async (req, res) =>{
 };
 
 const getDoctors = async (req, res) => {
-    let doctorId = req.params.id; // Assuming the parameter is named id
+    let id = req.params.id;
     try {
-        const doctor = await Doctors.findOne({ DoctorID: doctorId });
+        const doctor = await Doctors.findById(id);
 
         if (doctor) {
             res.json(doctor);
         } else {
-            res.status(400).json({ msg: `Doctor with DoctorID ${doctorId} does not exist` });
+            res.status(400).json({ msg: `Doctor with DoctorID ${id} does not exist` });
         }
     } catch (error) {
         console.error(error);
@@ -79,7 +79,7 @@ const createDoctor = async (req, res) => {
 };
 
 const updateDoctor = async (req, res) => {
-    const {  UserName, 
+    const {  id, UserName, 
         email,
         Password,
         lastname, 
@@ -93,11 +93,10 @@ const updateDoctor = async (req, res) => {
         LicenseNumber, 
         Specialization, 
         Address } = req.body;
-        let doctorId = req.params.id;
         try {
-            const doctors = await Doctors.findOne({ DoctorID: doctorId });
+            const doctors = await Doctors.findById(id);
             if (!doctors) {
-                return res.status(404).json({ error: "Doctor not found" });
+                return res.status(404).json({ error: `Doctor not found`  });
             }
             doctors.UserName = UserName;
             doctors.email = email;
@@ -114,6 +113,7 @@ const updateDoctor = async (req, res) => {
             doctors.LicenseNumber = LicenseNumber;
             doctors.Specialization = Specialization;
             doctors.Address = Address;
+
             
             await doctors.save();
             res.status(200).json({ msg: "Data updated successfully" });

@@ -11,14 +11,14 @@ const getAllPatients = async (req, res) =>{
 };
 
 const getPatients = async (req, res) => {
-    let patinetId = req.params.id;
+    let id = req.params.id;
     try {
-        const patient = await Patients.findOne({ PatientID: patinetId });
+        const patient = await Patients.findById(id);
 
         if (patient) {
             res.json(patient);
         } else {
-            res.status(400).json({ msg: `patient with patient ${PatientID} does not exist` });
+            res.status(400).json({ msg: `patient with patient ${id} does not exist` });
         }
     } catch (error) {
         console.error(error);
@@ -47,7 +47,7 @@ const createPatient = async (req, res) => {
 
     try {
 
-        const doctor = await Patients.create({
+        const patient = await Patients.create({
             UserName: UserName,
             Password: Password,
             lastname: lastname,
@@ -67,7 +67,7 @@ const createPatient = async (req, res) => {
 
         });
 
-        if(doctor){
+        if(patient){
             res.status(201).json({ msg: `Data inserted with id ${Patients.PatientID}`});
         } else {
             res.status(400).json({msg:"Data not inserted"})
@@ -79,8 +79,9 @@ const createPatient = async (req, res) => {
 };
 
 const updatePatient = async (req, res) => {
-    const { id, UserName, 
+    const {  id,  UserName, 
         email,
+        Password,
         lastname, 
         firstName, 
         middleName, 
@@ -93,51 +94,54 @@ const updatePatient = async (req, res) => {
         EmergencyContact, 
         Address } = req.body;
 
-    try {
-        const updatedDoctor = await Patients.findOneAndUpdate(
-            { PatientID: id },
-            {
-                $set: {
-                    UserName,
-                    email,
-                    lastname,
-                    firstName,
-                    middleName,
-                    prefix,
-                    gender,
-                    birthday,
-                    contactNumber,
-                    MaritalStatus,
-                    
-                    Birthplace, 
-                    EmergencyContact, 
-                    Address,
-                }
-            },
-            { new: true } // Return the modified document
-        );
+        try {
+            const patients = await Patients.findOne(id);
+            if (!patients) {
+                return res.status(404).json({ error: `Patient not found`  });
+            }
+            patients.UserName = UserName;
+            patients.email = email;
+            patients.Password = Password;
+            patients.lastname = lastname;
+            patients.firstName = firstName;
+            patients.firstName = firstName;
+            patients.middleName = middleName;
+            patients.prefix = prefix;
+            patients.gender = gender;
+            patients.birthday = birthday;
+            patients.contactNumber = contactNumber;
+            patients.MaritalStatus = MaritalStatus;
+            patients.Birthplace = Birthplace;
+            patients.EmergencyContact = EmergencyContact;
+            patients.Address = Address;
 
-        if (updatedPatient) {
-            res.status(200).json({ msg: "Data updated successfully", updatedPatient });
-        } else {
-            res.status(404).json({ msg: `Doctor with DoctorID ${id} not found` });
+            
+            await patients.save();
+            res.status(200).json({ msg: "Data updated successfully" });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Internal Server Error" });
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: 'Internal Server Error' });
-    }
 };
+
 
 
 const deletePatient = async (req, res) => {
     const { id } = req.body;
+    
     try {
-        await Patients.findByIdAndDelete(id);
-        res.status(200).json({msg: "Data Deleted successfully"});
+        const deletedPatient = await Patients.findByIdAndDelete(id);
+        
+        if (deletedPatient) {
+            res.status(200).json({ msg: "Data Deleted successfully" });
+        } else {
+            res.status(404).json({ msg: "Patient not found" });
+        }
     } catch (error) {
         throw error;
     }
 };
+
 
 
 module.exports = {
