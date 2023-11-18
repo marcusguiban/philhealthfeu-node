@@ -71,7 +71,8 @@ const PatientSchema = new Schema({
 PatientSchema.pre("save", function (next) {
     const currentYear = new Date().getFullYear().toString();
     const randomDigits = Math.floor(10000 + Math.random() * 90000).toString().substring(0, 5);
-    this.PatientID = currentYear + randomDigits;
+    const generatedID = currentYear + randomDigits;
+    this.PatientID = 'D-' + generatedID; 
     next();
   });
 module.exports = mongoose.model("Patients", PatientSchema);

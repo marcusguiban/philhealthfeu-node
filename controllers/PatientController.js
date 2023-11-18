@@ -95,7 +95,7 @@ const updatePatient = async (req, res) => {
         Address } = req.body;
 
         try {
-            const patients = await Patients.findOne(id);
+            const patients = await Patients.findById(id);
             if (!patients) {
                 return res.status(404).json({ error: `Patient not found`  });
             }

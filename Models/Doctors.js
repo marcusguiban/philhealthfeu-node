@@ -69,9 +69,11 @@ const doctorsSchema = new Schema({
 },{timestamps:true});
 
 doctorsSchema.pre("save", function (next) {
-    const currentYear = new Date().getFullYear().toString();
-    const randomDigits = Math.floor(10000 + Math.random() * 90000).toString().substring(0, 5);
-    this.DoctorID = currentYear + randomDigits;
-    next();
-  });
+  const currentYear = new Date().getFullYear().toString();
+  const randomDigits = Math.floor(10000 + Math.random() * 90000).toString().substring(0, 5);
+  const generatedID = currentYear + randomDigits;
+  this.DoctorID = 'D-' + generatedID; // Add 'D-' prefix to the generated ID
+  next();
+});
+
 module.exports = mongoose.model("Doctors", doctorsSchema);
