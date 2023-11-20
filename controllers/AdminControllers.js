@@ -58,7 +58,6 @@ const createAdmin = async (req, res) => {
             middleName:middleName,
            Businessemail:Businessemail,
             prefix:prefix,
-            gender:gender,
             ContactNumber:ContactNumber,
             Occuption: Occuption,
             Sector: Sector,
