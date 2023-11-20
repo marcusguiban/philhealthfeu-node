@@ -23,6 +23,6 @@ router.put("/",  DoctorMongoDBController.updateDoctor);
 
 // delete
 
-router.delete("/:id",DoctorMongoDBController.deleteDoctor);
+router.delete("/",DoctorMongoDBController.deleteDoctor);
 
 module.exports = router;

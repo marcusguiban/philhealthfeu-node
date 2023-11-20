@@ -23,6 +23,6 @@ router.put("/",  AdminMongoDBController.updateAdmin);
 
 // delete
 
-router.delete("/:id",AdminMongoDBController.deleteAdmin);
+router.delete("/",AdminMongoDBController.deleteAdmin);
 
 module.exports = router;

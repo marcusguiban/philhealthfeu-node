@@ -23,6 +23,6 @@ router.put("/",  HospitalMongoDBController.updateHospital);
 
 // delete
 
-router.delete("/:id",HospitalMongoDBController.deleteHospital);
+router.delete("/",HospitalMongoDBController.deleteHospital);
 
 module.exports = router;

@@ -114,7 +114,6 @@ const updateAdmin = async (req, res) => {
             admin.middleName = middleName;
             admin.prefix = prefix;
             admin.Businessemail = Businessemail;
-            admin.birthday = birthday;
             admin.ContactNumber = ContactNumber;
             admin.Occuption = Occuption;
             admin.Sector = Sector;
