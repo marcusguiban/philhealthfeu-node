@@ -10,6 +10,7 @@ const hospitalRoutes = require("./Routes/Hospital");
 const adminRoutes = require("./Routes/Admin");
 const transactionRoutes = require("./Routes/Transaction");
 const remittanceRoutes = require("./Routes/Remittance");
+const AppointmentRoutes = require("./Routes/Appointment");
 
 const cors = require("cors")
 const connection = require("./database");
@@ -32,6 +33,7 @@ app.use("/api/hospital", hospitalRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/transaction", transactionRoutes);
 app.use("/api/remittance", remittanceRoutes);
+app.use("/api/appointment", AppointmentRoutes);
 
 
 const PORT = process.env.PORT || 5000;
