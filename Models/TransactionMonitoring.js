@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema
 
 
-const adminSchema = new Schema({
-    AdminID: {
+const TransactionSchema = new Schema({
+    TransactionID: {
         type: String,
         unique: true,
     },
@@ -15,48 +15,47 @@ const adminSchema = new Schema({
         type: String,
         required: true,
     },
-    lastname: {
+    Amount: {
+        type: Number,
+        required: true,
+    },
+    ORnumber: {
         type: String,
         required: true,
       },
 
-    firstName: {
+    ModeOfPayment: {
         type: String,
         required: true,
     },
-    middleName: {
-    type: String,
+    ReceivedBy: {
+        type: String,
+        required: true,
     },    
-    prefix: {
-    type: String,
+    PaidBy: {
+        type: String,
+        required: true,
     },
 
-    Businessemail: {
+    HospitalName: {
         type: String,
         required: true,
-      },
-    ContactNumber: {
-        type: String,
+        },
+    Date: {
+        type: Date,
         required: true,
-    },
-    
-    Occuption: {
-        type: String,
-        required: true,
-    },
-    Sector: {
+        },
+    Address: {
         type: String,
         required: true,
     },
-    Officeaddress: {
-        type: String,
-        required: true,
-    },
+
     Barangay: {
         type: String,
         required: true,
     },
-    City: {
+
+      City: {
         type: String,
         required: true,
     },
@@ -68,19 +67,30 @@ const adminSchema = new Schema({
         type: String,
         required: true,
     },
-    Postalcode: {
+    PostalCode: {
         type: String,
         required: true,
     },
-
+    DescriptionOfVisit: {
+        type: String,
+        required: true,
+    },
+    PatientID: {
+        type: String,
+        required: true,
+    },
+    DoctorID: {
+        type: String,
+        required: true,
+    },
 },{timestamps:true});
 
-adminSchema.pre("save", function (next) {
+TransactionSchema.pre("save", function (next) {
   const currentYear = new Date().getFullYear().toString();
   const randomDigits = Math.floor(10000 + Math.random() * 90000).toString().substring(0, 5);
   const generatedID = currentYear + randomDigits;
-  this.AdminID = 'A-' + generatedID; // Add 'D-' prefix to the generated ID
+  this.TransactionID = 'T-' + generatedID; 
   next();
 });
 
-module.exports = mongoose.model("Admin", adminSchema);
+module.exports = mongoose.model("Transaction", TransactionSchema);
