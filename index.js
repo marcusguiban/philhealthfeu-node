@@ -6,6 +6,7 @@ const path = require("path");
 
 const doctorRoutes = require("./Routes/Doctors");
 const patientRoutes = require("./Routes/Patients");
+const hospitalRoutes = require("./Routes/Hospital");
 
 const cors = require("cors")
 const connection = require("./database");
@@ -24,6 +25,7 @@ app.use(cors());
 // routes
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/patients", patientRoutes);
+app.use("/api/hospital", hospitalRoutes);
 
 
 const PORT = process.env.PORT || 5000;
