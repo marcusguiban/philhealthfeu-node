@@ -76,17 +76,17 @@ const updateAppontment = async (req, res) => {
         } = req.body;
 
         try {
-            const appoitments = await Appointments.findById(id);
+            const appointments = await Appointments.findById(id);
             if (!appointments) {
                 return res.status(404).json({ error: `Appointment not found`  });
             }
-            Appointments.Time = Time,
-            Appointments.Date = Date,
-            Appointments.Sector = Sector,
-            Appointments.PatientName = PatientName,
-            Appointments.Hospital = Hospital,
-            Appointments.Address = Address,
-            Appointments.DoctorsDiagnosis = DoctorsDiagnosis,
+            appointments.Time = Time,
+            appointments.Date = Date,
+            appointments.Sector = Sector,
+            appointments.PatientName = PatientName,
+            appointments.Hospital = Hospital,
+            appointments.Address = Address,
+            appointments.DoctorsDiagnosis = DoctorsDiagnosis,
            
 
             
