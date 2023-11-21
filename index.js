@@ -9,6 +9,7 @@ const patientRoutes = require("./Routes/Patients");
 const hospitalRoutes = require("./Routes/Hospital");
 const adminRoutes = require("./Routes/Admin");
 const transactionRoutes = require("./Routes/Transaction");
+const remittanceRoutes = require("./Routes/Remittance");
 
 const cors = require("cors")
 const connection = require("./database");
@@ -30,6 +31,7 @@ app.use("/api/patients", patientRoutes);
 app.use("/api/hospital", hospitalRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/transaction", transactionRoutes);
+app.use("/api/remittance", remittanceRoutes);
 
 
 const PORT = process.env.PORT || 5000;
